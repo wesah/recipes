@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest Mozilla Firefox ESR installer</string>
+    <key>Identifier</key>
+    <string>com.github.wesah.download.mozillafirefoxesr</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>MozillaFirefoxESR</string>
+        <key>URL</key>
+        <string>https://download.mozilla.org/?product=firefox-esr-latest-ssl&amp;os=osx&amp;lang=en-US</string>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.4.1</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Comment</key>
+            <string>Download latest Mozilla Firefox ESR disk image</string>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%URL%</string>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>comment</key>
+                <string>Use wildcard matching for the app so it will also match FirefoxDeveloperEdition.app and FirefoxNightly.app</string>
+                <key>input_path</key>
+                <string>%pathname%/Firefox*.app</string>
+                <key>requirement</key>
+                <string>anchor apple generic and certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "43AQ936H96"</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
