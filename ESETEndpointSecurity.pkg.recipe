@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest version of ESET Endpoint Anti-Virus for macOS, mounts the DMG, and extracts the Installer.pkg.</string>
+    <key>Identifier</key>
+    <string>com.github.wesah.pkg.esetendpointsecurity</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ESETEndpointSecurity</string>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.wesah.download.esetendpointsecurity</string>
+    <key>Process</key>
+    <array>
+	<dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Resources/Uninstaller.app/Contents/Info.plist</string>
+            </dict>
+        </dict>        
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Resources/Installer.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
